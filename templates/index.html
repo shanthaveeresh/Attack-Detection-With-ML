@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn giao diện mạng</title>
+</head>
+<body>
+    <h1>Chọn giao diện mạng</h1>
+    <form action="/set_interface" method="POST">
+        <label for="interface">Chọn giao diện:</label>
+        <select name="interface" id="interface">
+            {% for iface in interfaces %}
+            <option value="{{ iface }}" {% if iface == selected_interface %} selected {% endif %}>
+                {{ iface }}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Xác nhận</button>
+    </form>
+
+    {% if selected_interface %}
+    <p>Giao diện đã chọn: <b>{{ selected_interface }}</b></p>
+    <form action="/start_capture" method="POST">
+        <button type="submit">Bắt đầu thu thập gói tin</button>
+    </form>
+    </br>
+    <form action="/results" method="GET">
+        <button type="submit">Phân tích</button>
+    </form>
+    </br>
+    <form action="/view" method="GET">
+        <button type="submit">Xem phân tích</button>
+    </form>
+
+    {% else %}
+    <p>Chưa có giao diện nào được chọn.</p>
+    {% endif %}
+    
+</body>
+</html>
